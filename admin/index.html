@@ -2,57 +2,100 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>大事件-后台首页</title>
-    <link rel="stylesheet" href="./libs/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/iconfont.css">
-    <link rel="stylesheet" href="css/main.css">
-    <script src="./libs/jquery-1.12.4.min.js"></script>
-    <!-- 导入bootstrap的js文件 -->
-    <script src="./libs/bootstrap/js/bootstrap.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>大事件-后台首页</title>
+  <link rel="stylesheet" href="./libs/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/iconfont.css">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="./libs/jquery-1.12.4.min.js"></script>
+  <!-- 导入bootstrap的js文件 -->
+  <script src="./libs/bootstrap/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-    <div class="sider">
-        <a href="#" class="logo"><img src="images/logo02.png" alt="logo"></a>
-        <div class="user_info">
-            <img src="images/2.jpg" alt="person">
-            <span>欢迎&nbsp;&nbsp;李宗盛</span>
-            <b>管理员</b>
-        </div>
-        <!-- 左侧导航栏 -->
-        <div class="menu">
-            <div class="level01 active"><a href="#" target="main_frame"><i
-                        class="iconfont icon-yidiandiantubiao04"></i><span>首页</span></a></div>
-            <div class="level01"><a href="#"><i class="iconfont icon-icon-article"></i><span>文章管理</span><b
-                        class="iconfont icon-arrowdownl"></b></a></div>
-            <ul class="level02">
-                <li><a href="#" target="main_frame"><i class="iconfont icon-previewright"></i><span>文章列表</span></a></li>
-                <li><a href="#" target="main_frame"><i class="iconfont icon-previewright"></i><span>发表文章</span></a></li>
-                <li><a href="#" target="main_frame"><i class="iconfont icon-previewright"></i><span>文章类别管理</span></a>
-                </li>
-            </ul>
-
-            <div class="level01"><a href="#" target="main_frame"><i
-                        class="iconfont icon-comment"></i><span>评论管理</span></a></div>
-            <div class="level01" id="user"><a href="#" target="main_frame"><i
-                        class="iconfont icon-user"></i><span>个人中心</span></a></div>
-        </div>
-        <!-- 顶部栏 -->
-        <div class="header_bar">
-            <div class="user_center_link">
-                <a href="./user.html" target="main_frame">个人中心</a>
-                <img src="images/2.jpg" alt="person">
-                <a href="javascript:void(0)" class="logout"><i class="iconfont icon-tuichu"></i> 退出</a>
-            </div>
-        </div>
-        <!-- 右侧主体内容 -->
-        <div class="main" id="main_body">
-
-        </div>
+  <div class="sider">
+    <a href="#" class="logo"><img src="" alt="logo"></a>
+    <div class="user_info">
+      <img src="images/2.jpg" alt="person">
+      <span>欢迎&nbsp;&nbsp;</span>
+      <b>管理员</b>
     </div>
+    <!-- 左侧导航栏 -->
+    <div class="menu">
+      <div class="level01 active"><a href="./main_count.html" target="main_frame"><i
+                        class="iconfont icon-yidiandiantubiao04"></i><span>首页</span></a></div>
+      <div class="level01"><a href="#"><i class="iconfont icon-icon-article"></i><span>文章管理</span><b
+                        class="iconfont icon-arrowdownl"></b></a></div>
+      <ul class="level02">
+        <li><a href="article_list.html" target="main_frame"><i class="iconfont icon-previewright"></i><span>文章列表</span></a></li>
+        <li><a href="article_release.html" target="main_frame"><i class="iconfont icon-previewright"></i><span>发表文章</span></a></li>
+        <li><a href="article_category.html" target="main_frame"><i class="iconfont icon-previewright"></i><span>文章类别管理</span></a>
+        </li>
+      </ul>
+
+      <div class="level01"><a href="./comment_list.html" target="main_frame"><i
+                        class="iconfont icon-comment"></i><span>评论管理</span></a></div>
+      <div class="level01" id="user"><a href="./user.html" target="main_frame"><i
+                        class="iconfont icon-user"></i><span>个人中心</span></a></div>
+    </div>
+    <!-- 顶部栏 -->
+    <div class="header_bar">
+      <div class="user_center_link">
+        <a href="./user.html" target="main_frame">个人中心</a>
+        <img src="" alt="person">
+        <a href="javascript:void(0)" class="logout"><i class="iconfont icon-tuichu"></i> 退出</a>
+      </div>
+    </div>
+    <!-- 右侧主体内容 -->
+    <div class="main" id="main_body">
+      <!-- 在右侧添加iframe标签用来嵌套其他页面 -->
+      <iframe name="main_frame" src="./main_count.html" frameborder="0"></iframe>
+    </div>
+  </div>
 </body>
+
+<script>
+  // jQuery的入口函数
+  $(function() {
+    // 需求1：当点击文章管理超链接的时候需要将ul列表进行显示，并且需要给文章管理超链接注册事件
+    $('.level01:eq(1)').click(function() {
+      $('.level02').slideToggle();
+    });
+    // 需求2：当点击超链接的时候，需要给当前点击的标签添加高亮效果，其他没有点击的要删除高亮效果，需要给所有的超链接添加点击事件
+    $('.level01').click(function() {
+      // 给当前的事件源添加高亮效果，我们用this表示当前事件源，因为this表示的是DOM节点，这是在jQuery对象中，所以我们要将DOM对象转成jQuery对象$(this)
+      $(this).addClass('active').siblings().removeClass('active');
+    });
+    // 给ul列表中的li标签点击的时候添加样式
+    $('.level02 li').click(function() {
+      $(this).addClass('active').siblings().removeClass('active');
+    });
+    // 需求3：用户登录成功之后需要将登录用户的用户名和头像进行跟新，也是使用ajax技术从服务器中获取
+    $.ajax({
+      // 设置请求方式
+      type: 'GET',
+      // 设置url接口地址
+      url: 'http://localhost:8080/api/v1/admin/user/info',
+      // 根据接口需求，设置一个请求头
+      headers: {
+        // 我们需要把token值放到请求头中，将这个请求头传递到服务器中，这个请求头已经存到了本地中，我们只需从浏览器本地中获取就可以啦
+        Authorization: localStorage.getItem('token'),
+      },
+      // 响应回来的数据
+      success: function(result) {
+        // 查看一下，看看服务器响应回来的是什么数据
+        // console.log(result);
+        // 现在我们需要将这个对象中的数据渲染到页面中就可以啦，src是img标签的固有属性，所以使用attr()方法
+        $('.user_info>img').attr('src', result.data.userPic);
+        // 因为所要添加的用户名属于span标签的文本内容，所以使用text()这个方法
+        $('.user_info>span').text('欢迎  ' + result.data.nickname);
+        $('.user_center_link>img').attr('src', result.data.userPic);
+      }
+    });
+  });
+</script>
+
 </html>

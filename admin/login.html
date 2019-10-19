@@ -39,5 +39,55 @@
   </div>
 
 </body>
+<script>
+  // jQuery的入口函数
+  $(function() {
+    // 需求：当点击登录按钮的时候需要登录到index.html页面中
+    // 分析：当我们点击登录按钮的时候需要获取到用户名和密码，所以给登录按钮注册点击事件
+    $('.input_sub').click(function(e) {
+      // 因为这个登录按钮是使用input type=submit类型做的，这个类型有一个不好的地方就是点击这个按钮就会刷新页面，并且会将输入的用户名和密码进行清除，这是这个按钮自带的一种默认行为，所以我们要将这个默认行为禁止掉
+      e.preventDefault();
+      // 获取用户名 trim()方法是清除字符串两边的空白位
+      var username = $('.input_txt').val().trim();
+      // 获取用户密码
+      var password = $('.input_pass').val().trim();
+      // 先对用户名和密码进行一个非空处理
+      if (username === '' || password === '') {
+        alert('用户名或密码不得为空');
+        return;
+      } else {
+        // console.log(username, password);
+        // 程序如果走到这儿，那么就说明用户名和密码不是空的，所以我们要将获取到的用户名和密码使用ajax技术传到服务器中
+        $.ajax({
+          // 设置请求方式：
+          type: 'POST',
+          // 调用url接口地址
+          url: 'http://localhost:8080/api/v1/admin/user/login',
+          // 设置请求参数
+          data: {
+            // 冒号前面的参数是接口文档中的键名，后面的参数是获取到的用户名以及密码
+            username: username,
+            password: password,
+          },
+          success: function(result) {
+            // 判断用户名是否登录成功
+            if (result.code === 400) {
+              // 如果返回值等于400，那么就说明用户名和密码不存在，登录失败，并且提示用户
+              alert(result.msg);
+            }
+            if (result.code === 200) {
+              alert('用户登录成功！！！');
+              // 如果返回值的code值等于200，就说明用户名和密码输入正确，保存token值并跳转到index页面中localStorage.setItem(参数一，参数二);第一个参数表示的是保存的字段名，第二个参数是需要保存的值
+              // 这里需要注意为什么要保存这个token值，因为我们后面需要判断用户是否登录了，只有登录了之后，浏览器中才会保存这个token值，token相当于一个密匙，后面我们要获取用户信息的话，我们需要通过这个token来获取到用户的一些信息，比如用户名和用户头像
+              window.localStorage.setItem('token', result.token);
+              // 登录成功之后需要跳转到index.html页面中
+              window.location.href = './index.html';
+            }
+          }
+        });
+      }
+    });
+  });
+</script>
 
 </html>
