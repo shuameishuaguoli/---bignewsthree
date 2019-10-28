@@ -17,9 +17,9 @@
 
 <body>
   <div class="sider">
-    <a href="#" class="logo"><img src="" alt="logo"></a>
+    <a href="#" class="logo"><img src="images/logo02.png" alt="logo"></a>
     <div class="user_info">
-      <img src="images/2.jpg" alt="person">
+      <img src="#" alt="person">
       <span>欢迎&nbsp;&nbsp;</span>
       <b>管理员</b>
     </div>
@@ -45,8 +45,8 @@
     <div class="header_bar">
       <div class="user_center_link">
         <a href="./user.html" target="main_frame">个人中心</a>
-        <img src="" alt="person">
-        <a href="javascript:void(0)" class="logout"><i class="iconfont icon-tuichu"></i> 退出</a>
+        <img src="#" alt="person">
+        <a href="#" class="logout"><i class="iconfont icon-tuichu"></i> 退出</a>
       </div>
     </div>
     <!-- 右侧主体内容 -->
@@ -60,6 +60,7 @@
 <script>
   // jQuery的入口函数
   $(function() {
+
     // 需求1：当点击文章管理超链接的时候需要将ul列表进行显示，并且需要给文章管理超链接注册事件
     $('.level01:eq(1)').click(function() {
       $('.level02').slideToggle();
@@ -95,6 +96,22 @@
         $('.user_center_link>img').attr('src', result.data.userPic);
       }
     });
+
+    // 需求：点击退出按钮的时候，需要将保存到本地的token字段所存储的值进行删除，并跳转到登录页面
+    // 首先，给退出按钮注册点击按钮
+    $('.logout').click(function() {
+      // 点击了退出按钮的时候需要给用户一个询问提示
+      var firm = confirm('确定要退出吗？');
+      if (!firm) {
+        return;
+      } else {
+        // 点击了退出按钮的时候需要将locastorage中的token字段进行删除
+        window.localStorage.removeItem('token');
+        // 并跳转到用户登录页面
+        window.location.href = './login.html';
+      }
+    });
+
   });
 </script>
 

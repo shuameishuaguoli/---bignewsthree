@@ -2,72 +2,158 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>文章列表</title>
-    <link rel="stylesheet" href="./libs/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/iconfont.css">
-    <link rel="stylesheet" href="css/main.css">
-    <script src="./libs/jquery-1.12.4.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>文章列表</title>
+  <link rel="stylesheet" href="./libs/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/iconfont.css">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="./libs/jquery-1.12.4.min.js"></script>
 
 </head>
 
 <body>
-    <div class="container-fluid">
-        <div class="common_title">
-            用户信息修改
+  <div class="container-fluid">
+    <div class="common_title">
+      用户信息修改
+    </div>
+    <div class="container-fluid common_con">
+      <form class="form-horizontal article_form" id="form">
+        <div class="form-group">
+          <label for="inputEmail1" class="col-sm-2 control-label">用户名称：</label>
+          <div class="col-sm-4">
+            <input type="text" name="username" class="form-control username" id="inputEmail1" value="李宗盛">
+          </div>
         </div>
-        <div class="container-fluid common_con">
-            <form class="form-horizontal article_form" id="form">
-                <div class="form-group">
-                    <label for="inputEmail1" class="col-sm-2 control-label">用户名称：</label>
-                    <div class="col-sm-4">
-                        <input type="text" name="username" class="form-control username" id="inputEmail1" value="李宗盛">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail2" class="col-sm-2 control-label">昵称：</label>
-                    <div class="col-sm-4">
-                        <input type="text" name="nickname" class="form-control nickname" id="inputEmail2" value="保健坤">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">邮箱：</label>
-                    <div class="col-sm-4">
-                        <input type="text" name="email" class="form-control email" id="inputEmail3" value="520@163.com">
-                    </div>
-                </div>
+        <div class="form-group">
+          <label for="inputEmail2" class="col-sm-2 control-label">昵称：</label>
+          <div class="col-sm-4">
+            <input type="text" name="nickname" class="form-control nickname" id="inputEmail2" value="保健坤">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputEmail3" class="col-sm-2 control-label">邮箱：</label>
+          <div class="col-sm-4">
+            <input type="text" name="email" class="form-control email" id="inputEmail3" value="520@163.com">
+          </div>
+        </div>
 
-                <div class="form-group">
-                    <label for="inputPassword3" class="col-sm-2 control-label">用户图标：</label>
-                    <div class="col-sm-10">
-                        <img src="images/2.jpg" alt="" class="user_pic">
-                        <input style="display: block" name="userPic" type="file" id="exampleInputFile">
-                        <!-- 给label标签的for属性赋值,值是input标签的id,那这样的话点击label就相当于点击了input -->
-                        <br>
-                        <label for="exampleInputFile">
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">用户图标：</label>
+          <div class="col-sm-10">
+            <img src="images/2.jpg" alt="" class="user_pic">
+            <input style="display: block" name="userPic" type="file" id="exampleInputFile">
+            <!-- 给label标签的for属性赋值,值是input标签的id,那这样的话点击label就相当于点击了input -->
+            <br>
+            <label for="exampleInputFile">
                             <img src="./images/uploads_icon.jpg" style="height: 50px;" alt="">
                         </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="inputEmail4" class="col-sm-2 control-label">密码：</label>
-                    <div class="col-sm-4">
-                        <input type="password" name="password" class="form-control password" id="inputEmail4"
-                            value="12345678">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-success btn-edit">修改</button>
-                    </div>
-                </div>
-            </form>
+          </div>
         </div>
+
+        <div class="form-group">
+          <label for="inputEmail4" class="col-sm-2 control-label">密码：</label>
+          <div class="col-sm-4">
+            <input type="password" name="password" class="form-control password" id="inputEmail4" value="12345678">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-success btn-edit">修改</button>
+          </div>
+        </div>
+      </form>
     </div>
+  </div>
 </body>
+
+<script>
+  // 
+  $(function() {
+
+
+    // 需求：当加载页面的时候需要将用户消息添加到input框中
+    // 分析：当加载页面的时候需要发送ajax请求，我们需要从服务器获取数据，并渲染到页面上
+    $.ajax({
+      // 设置url接口地址
+      url: BigNew.user_detail,
+      // 设置请求方式
+      type: 'get',
+      // 响应服务器返回的数据
+      success: function(result) {
+        console.log(result);
+        // 我们将获取到的内容设置到input框中
+        //   设置用户名称
+        $('#inputEmail1').val(result.data.username);
+        //   设置昵称
+        $('#inputEmail2').val(result.data.nickname);
+        // 设置邮箱
+        $('#inputEmail3').val(result.data.email); //userPic
+        //   设置头像
+        $('.user_pic').attr('src', result.data.userPic);
+        //   设置密码 password
+        $('#inputEmail4').val(result.data.password);
+      }
+    });
+
+
+    // 需求：实现图片预览的功能
+    // 分析：当文件上传控件中的内容改变的时候，需要获取到上传的头像，并给这个头像一个临时的url地址，最后将这个临时的url地址给到img中src这个固定属性中
+    $('#exampleInputFile').change(function() {
+      // 当内容发生改变的时候需要获取到上传的文件
+      var file = this.files[0];
+      // 我们给获取到的文件给定一个临时的url地址
+      var url = URL.createObjectURL(file);
+      //   console.log(url);
+      // 我们将这个临时地址给到img的src属性
+      $('.user_pic').attr('src', url);
+    });
+
+
+    // 需求：点击修改的时候，需要获取到form表单中的所有数据
+    // 首先，先给修改按钮注册一个点击事件
+    $('.btn-edit').click(e => {
+      // 这个修改按钮是用submit类型做的，所以我们需要将这个按钮的默认行为
+      e.preventDefault();
+      // 当点击了修改按钮的时候需要提示一下用户，询问一下用户是否真的需要修改
+      var firm = confirm('真的需要修改么？');
+      if (!firm) {
+        return;
+      } else {
+        // 先创建一个formdata实例对象，括号中需要传入一个DOM节点的实例对象
+        var form = new FormData($('#form')[0]);
+        // 我们使用ajax技术想服务器发送请求
+        $.ajax({
+          // 设置url接口地址
+          url: BigNew.user_edit,
+          // 设置请求方式
+          type: 'post',
+          // 设置请求参数
+          data: form,
+          // 这里需要注意：当formdata和ajax相结合的时候，需要添加两个参数
+          contentType: false,
+          processData: false,
+          // 响应服务器返回的数据
+          success: function(result) {
+            console.log(result);
+            if (result.code == 200) {
+              alert('用户信息更改成功~~');
+              //   信息更改成功之后需要刷新一下当前页面
+              window.location.reload();
+              //   刷新一下index.html页面
+              //   window.parent.location.reload();
+            } else {
+              alert('用户信息更改失败~~');
+            }
+          }
+        });
+      }
+    });
+
+    //
+  });
+</script>
 
 </html>
