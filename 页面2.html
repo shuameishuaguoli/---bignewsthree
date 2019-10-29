@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  // 需求：我需要获取到上一个页面带过来的参数
+  var str = window.location.search;
+  //   第一步：先将？号去掉 slice()是String类中的一个方法，作用是截取字符串的方法，如果写一个值，表示的是从当前下标一直截取到最后；如果写两个个值，取值范围是包左不包右，也就是半闭半开区间比如: var str='abcdefghigklmn'  slice(3,7);这个的取值范围就是从下标为3的元素开始截取，截取到下标为6的为止  所以输出结果为 defg
+  str = str.slice(1); //id=1&name=zhangsan&age=8
+  //   第二步：把&符号去掉，使用split()这个方法，返回值是一个数组，里面需要填一个给定的截取符号
+  str = str.split('&');
+  //   第三步：因为，我们需要的是一个对象类型的值，所以，我们需要先定义一个空对象
+  var obj = {};
+  // 第四步：我们要将这个数组进行遍历
+  for (var i = 0; i < str.length; i++) {
+    console.log(str[i]);
+    /* 
+        id=1
+        name=zhangsan
+        age=8
+     */
+    //  第五步：将键值中间的等号进行删除，同样适用split()方法，返回一个数组
+    var xiang = str[i].split('=');
+    /* 
+         ["id", "1"]
+         ["name", "zhangsan"]
+         ["age", "8"]
+     */
+    console.log(xiang);
+    // 第六步：向我们定义的空对象中添加数据，约定俗成的规定：数组的第一个索引是键，第二个所以是值  这里需要注意，对象的赋值格式是：对象名[]  的格式
+    obj[xiang[0]] = xiang[1];
+  }
+  //   {id: "1", name: "zhangsan", age: "8"}
+  console.log(obj);
+</script>
+
+</html>

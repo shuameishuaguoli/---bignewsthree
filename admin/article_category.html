@@ -31,14 +31,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>奇趣事</td>
-            <td>funny</td>
-            <td class="text-center">
-              <a href="javascript:void(0);" data-toggle="modal" class=" btn btn-info btn-xs">编辑</a>
-              <a href="javascript:void(0);" class="btn btn-danger btn-xs">删除</a>
-            </td>
-          </tr>
+          <!-- 文章类别的结构位置 -->
         </tbody>
         <tfoot>
           <tr>
@@ -51,7 +44,227 @@
     </div>
   </div>
 
+  <!-- 新增类别的模态框的HTML结构start -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">新增分类</h4>
+        </div>
+        <div class="modal-body">
+          <!-- from表单start -->
+          <form>
+            <div class="form-group">
+              <label for="exampleInputEmail1">分类名称:</label>
+              <input type="text" class="form-control" id="exampleInputEmail1">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">分类别名:</label>
+              <input type="text" class="form-control" id="exampleInputPassword1">
+            </div>
+          </form>
+          <!-- from表单end -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary" id="newadd">新增</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 新增类别的模态框的HTML结构end -->
+
+
+
+  <!-- 编辑按钮的模态框HTML结构start updata_gai-->
+  <div class="modal fade" id="my_upload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="my_fenlei">新增分类</h4>
+        </div>
+        <div class="modal-body">
+          <!-- from表单start -->
+          <form>
+            <!-- 设置一个隐藏域来放id -->
+            <input type="text" class="yincang">
+            <div class="form-group">
+              <label for="exampleInputEmail1">分类名称:</label>
+              <input type="text" class="form-control" id="updata_name">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">分类别名:</label>
+              <input type="text" class="form-control" id="updata_leiming">
+            </div>
+          </form>
+          <!-- from表单end -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary" id="upload">修改</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 编辑按钮的模态框HTML结构end -->
+
+
 
 </body>
+<!-- 定义引擎模板  -->
+<script type="text/html" id="text">
+  {{each data}}
+  <tr data-id="{{$value.id}}">
+    <td class="name">{{$value.name}}</td>
+    <td class="slug">{{$value.slug}}</td>
+    <td class="text-center ">
+      <a href="javascript:void(0);" data-toggle="modal" class="btn btn-info btn-xs" data-target="#my_upload">编辑</a>
+      <a href="javascript:void(0);" class="btn btn-danger btn-xs">删除</a>
+    </td>
+  </tr>
+  {{/each}}
+</script>
+
+<script>
+  // $('#my_upload').modal({
+  //   keyboard: false
+  // })
+
+  // 
+  // 入口函数
+  $(function() {
+      // 为了方便使用这个方法，我们要将这个方法封装成一个函数
+      function liebie_list() {
+        // 需求1： 当加载页面的时候，需要向服务器发送请求，获取数据
+        $.ajax({
+          // 设置url接口地址
+          url: BigNew.category_list,
+          // 设置请求方式
+          type: 'get',
+          // 响应服务器返回的参数
+          success: function(result) {
+            console.log(result);
+            // 我们使用模板引擎将获取到的数据添加到页面中
+            var str = template('text', result);
+            $('tbody').html(str);
+          }
+        });
+      }
+      // 我们先调用一下这个方法
+      liebie_list();
+
+
+      // 需求2: 点击新增按钮的时候，需要给文章类别管理标签添加一个文章类别
+      // 分析：给新增按钮注册一个点击事件，当点击新增按钮的时候，需要获取到form表单中的内容
+      $('.btn-primary').click(function() {
+        // 我们要将获取的这个form对象使用ajax技术请求道服务器中
+        var name = $('#exampleInputEmail1').val();
+        var slug = $('#exampleInputPassword1').val();
+        $.ajax({
+          // 设置url请求接口地址
+          url: BigNew.category_add,
+          // 设置请求方式
+          type: 'post',
+          // 设置请求参数
+          data: {
+            name: name,
+            slug: slug,
+          },
+          // 接收服务器响应的数据
+          success: function(result) {
+            console.log(result);
+            if (result.code == 201) {
+              alert('文章类别新增成功~~');
+              // 新增成功之后，我们需要在刷新一下文章类表页面
+              liebie_list();
+            } else {
+              alert('文章类别新增失败~~');
+            }
+            // 点击了新增之后需要将模态框进行隐藏
+            $('#myModal').modal('hide');
+          }
+        });
+      });
+
+      // 需求3：点击删除的时候需要将当前点击的文章列表进行删除，我们要给tbody注册点击事件
+      // 分析：我们要给删除按钮的父节点添加点击事件，当点击删除的时候需要向服务器发送一个请求，我们要获取到点击的标签的父标签上的自定义属性data-id  
+      $('tbody').on('click', '.btn-danger', function() {
+        // 询问一下用户
+        var firm = confirm('确定要删除吗？');
+        if (!firm) {
+          return;
+        } else {
+          // 因为我们把id值给到了tr标签上，所以我们要获取当前点击的标签的父节点，因为有两个父节点，所以我们要指定一下是tr标签这个父节点
+          var id = $(this).parents('tr').attr('data-id');
+          // 测试一下，看看能不能获取到这个id值
+          // console.log(id);
+          // 我们要拿着这个id值去后台服务器发送请求
+          $.ajax({
+            // 设置请求url的接口地址
+            url: BigNew.category_delete,
+            // 设置请求方式
+            type: 'post',
+            // 设置请求参数
+            data: {
+              id: id,
+            },
+            // 响应服务器返回的参数
+            success: function(result) {
+              // console.log(result);
+              if (result.code == 204) {
+                alert('数据删除成功~~');
+                // 数据删除成功之后，调用一下获取所有文章分类的方法
+                liebie_list();
+              } else {
+                alert('数据删除失败~~');
+              }
+            }
+          });
+        }
+      });
+
+
+      // 需求4: 点击编辑按钮的时候，需要弹出一个模态框，在模态框中填写内容，点击修改的时候需要修改了当前页面的内容，并且还在数据库中真的将数据进行了修改
+      // 分析：我们同样给tbody注册点击事件，点击tbody的时候，是编辑按钮触发了点击事件，我们要将tr上的自定义属性data-id中的id值填写到模态框中的一个隐藏域中，来吧
+      $('tbody').on('click', '.btn-info', function() {
+        // 获取到当前点击的父节点tr上的自定义属性data-id的id值
+        var id = $(this).parents('tr').attr('data-id');
+        // 测试一下看看能不能获取到tr上的id值
+        console.log(id);
+        // 将获取到的这个id值放到内个隐藏域中
+        $('.yincang').val(id);
+        // 将列表上的内容添加到页面上
+        // $('#updata_name').val($(this).parent().siblings('.name').text());
+        // $('#updata_leiming').val($(this).parent().siblings('.slug').text());
+        // 我们需要拿着这个id想服务器发送ajax请求，将返回的数据填写到模态框中
+        $.ajax({
+          // 设置url请求地址
+          url: BigNew.category_search,
+          // 设置请求方式
+          type: 'get',
+          // 设置请求参数
+          data: {
+            id: id,
+          },
+          // 响应服务器返回的数据
+          success: function(result) {
+            console.log(result);
+            $('#updata_name').val(result.data.code);
+            // $('#updata_leiming').val();
+            // $('#my_upload').modal('show')
+          }
+        });
+
+
+
+      });
+
+
+      // 
+    })
+    //
+</script>
 
 </html>
