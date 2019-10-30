@@ -10,7 +10,9 @@
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/iconfont.css">
   <link rel="stylesheet" href="css/main.css">
+  <!-- 引入jQuery的js文件 -->
   <script src="./libs/jquery-1.12.4.min.js"></script>
+  <!-- 引入bootstrap的js文件 -->
   <script src="./libs/bootstrap/js/bootstrap.min.js"></script>
   <!-- 引入模板引擎js文件 -->
   <script src="./libs/template-web.js"></script>
@@ -234,7 +236,7 @@
         // 测试一下看看能不能获取到tr上的id值
         console.log(id);
         // 将获取到的这个id值放到内个隐藏域中
-        $('.yincang').val(id);
+        // $('.yincang').val(id);
         // 将列表上的内容添加到页面上
         // $('#updata_name').val($(this).parent().siblings('.name').text());
         // $('#updata_leiming').val($(this).parent().siblings('.slug').text());
@@ -250,15 +252,64 @@
           },
           // 响应服务器返回的数据
           success: function(result) {
+            // 打印一下看看服务器返回的是什么数据
             console.log(result);
-            $('#updata_name').val(result.data.code);
-            // $('#updata_leiming').val();
-            // $('#my_upload').modal('show')
+            // 以下的赋值都是从服务器获取到数据，并不是从页面上获取的数据
+            // 将返回的数据中的id值给到隐藏域
+            $('.yincang').val(result.data[0].id);
+            // 将name值给到分类名称
+            $('#updata_name').val(result.data[0].name);
+            // 将slug给到类名
+            $('#updata_leiming').val(result.data[0].slug);
           }
         });
+      });
 
-
-
+      // 需求：点击修改的时候，将修改后的信息在数据库中也做到了修改，在刷新页面的时候，页面上的信息也真的做了修改
+      // 分析：给修改按钮注册点击事件，点击了修改按钮，需要获取到模态框中的内容，并结合ajax技术将获取到的信息在数据库中进行更改
+      $('#upload').click(function() {
+        // 点击了修改按钮需要给用户一个友好的提示
+        var firm = confirm('确定是需要修改吗？');
+        if (!firm) {
+          return;
+        } else {
+          //   //   // 需要获取到隐藏域中的id值，这个id的作用就是需要让服务器知道，我想改哪一条数据，因为id值是唯一的，所以需要获取到这个id值
+          var id = $('.yincang').val();
+          //   // 测试一下，看看能不能拿到这个id值
+          //   // console.log(id);
+          // 获取分类名称中的内容
+          var name = $('#updata_name').val();
+          // 获取分类别名中的内容
+          var slug = $('#updata_leiming').val();
+          // 打印出一下获取到的内容
+          // console.log(name, slug);
+          // 发送ajax请求
+          $.ajax({
+            // 设置url接口地址
+            url: BigNew.category_edit,
+            // 设置请求方式
+            type: 'post',
+            // 设置请求参数
+            data: {
+              id,
+              name,
+              slug,
+            },
+            // 响应服务器的数据
+            success: function(result) {
+              // console.log(result);
+              if (result.code == 200) {
+                alert('数据修改成功~~');
+                // 数据修改成功之后，在调用一下获取全部数据的方法
+                liebie_list();
+              } else {
+                alert('数据修改失败~~')
+              }
+            }
+          });
+          // 点击了修改按钮之后需要将模态框进行隐藏
+          $('#my_upload').modal('hide');
+        }
       });
 
 

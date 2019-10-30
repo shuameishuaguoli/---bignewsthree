@@ -2,71 +2,267 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>文章列表</title>
-    <link rel="stylesheet" href="./libs/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/iconfont.css">
-    <link rel="stylesheet" href="css/main.css">
-    <!-- jq -->
-    <script src="./libs/jquery-1.12.4.min.js"></script>
-    <!-- 模板引擎 -->
-    <script src="./libs/template-web.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>文章列表</title>
+  <link rel="stylesheet" href="./libs/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/iconfont.css">
+  <link rel="stylesheet" href="css/main.css">
+  <!-- jq -->
+  <script src="./libs/jquery-1.12.4.min.js"></script>
+  <!-- 模板引擎 -->
+  <script src="./libs/template-web.js"></script>
+  <!-- 引入时间插件的js文件 -->
+  <script src="./libs/jedate.min.js"></script>
+  <!-- 引入时间插件的css文件 -->
+  <link rel="stylesheet" href="./css/jeDate-test.css">
+  <link rel="stylesheet" href="./css/jedate.css">
+  <!-- 引入富文本编辑器的js文件 -->
+  <script src="./libs/wangEditor.min.js"></script>
 </head>
 
 <body>
-    <div class="container-fluid">
-        <div class="common_title">
-            文章编辑
-        </div>
-        <div class="container-fluid common_con">
-            <form class="form-horizontal article_form" id="form">
-                <div class="form-group">
-                    <label for="inputTitle" class="col-sm-2 control-label">文章标题：</label>
-                    <div class="col-sm-10">
-                        <input type="text" name="title" class="form-control title" id="inputTitle" value="文章标题文字">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputCover" class="col-sm-2 control-label">文章封面：</label>
-                    <div class="col-sm-10">
-                        <img src="images/pic06.jpg" class="article_cover">
-                        <input name="cover" type="file" id="inputCover">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputCategory" class="col-sm-2 control-label">文章类别：</label>
-                    <div class="col-sm-4">
-                        <select class="form-control category" name="categoryId">
-                            <option>类别一</option>
-                            <option>类别二</option>
-                            <option>类别三</option>
-                            <option selected>类别四</option>
-                            <option>类别五</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">发布时间：</label>
-                    <div class="col-sm-4">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">文章内容：</label>
-                    <div class="col-sm-10">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-success btn-edit">修改</button>
-                        <button type="submit" class="btn btn-default btn-draft">存为草稿</button>
-                    </div>
-                </div>
-            </form>
-        </div>
+  <div class="container-fluid">
+    <div class="common_title">
+      文章编辑
     </div>
+    <div class="container-fluid common_con">
+      <form class="form-horizontal article_form" id="form">
+        <div class="form-group">
+          <label for="inputTitle" class="col-sm-2 control-label">文章标题：</label>
+          <div class="col-sm-10">
+            <input type="text" name="title" class="form-control title" id="inputTitle" value="文章标题文字">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputCover" class="col-sm-2 control-label">文章封面：</label>
+          <div class="col-sm-10">
+            <img src="images/pic06.jpg" class="article_cover">
+            <input name="cover" type="file" id="inputCover">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputCategory" class="col-sm-2 control-label">文章类别：</label>
+          <div class="col-sm-4">
+            <select class="form-control category" name="categoryId">
+                           <!-- 文章类别分类HTML位置 -->
+                        </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">发布时间：</label>
+          <div class="col-sm-4">
+
+
+            <!-- 时间插件的HTML结构代码start -->
+            <input id="theme01" name="date" type="text" placeholder="请选择">
+            <!-- 时间插件的HTML结构代码end -->
+
+
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputEmail3" class="col-sm-2 control-label">文章内容：</label>
+          <div class="col-sm-10">
+
+
+            <!-- 富文本编辑器插件儿的HTML结构代码start -->
+            <div id="editor">
+              <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
+            </div>
+            <!-- 富文本编辑器插件儿的HTML结构代码end -->
+
+
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-success btn-edit">修改</button>
+            <button type="submit" class="btn btn-default btn-draft">存为草稿</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 </body>
+
+<!-- 文章分类模板引擎start -->
+<script type="text/html" id="text">
+  {{each data}}
+  <option value="{{$value.id}}">{{$value.name}}</option>
+  {{/each}}
+</script>
+<!-- 文章分类模板引擎end -->
+
+
+<script>
+  // jQuery的入口函数
+  $(function() {
+    // 
+    // 需求1：当跳转到这个页面时候，我需要获取到文章列表页面带过来的id值
+    var get_id = window.location.search; //?id=242
+    //  测试一下看看能不能获取到这个id值
+    // 第一步：我们现在将?问号去掉
+    get_id = get_id.slice(1); //id=244
+    //   第二步将等号进行去除
+    get_id = get_id.split('='); //["id", "244"]
+    // 因为我们需要对象类型，所以，第三步，我们需要定义一个空对象
+    var obj = {};
+    // 我们对获取到的数组进行遍历
+    for (var i = 0; i < get_id.length; i++) {
+      obj[get_id[0]] = get_id[1];
+    }
+    //   console.log(obj); //{id: "244"}
+    //   最后就能获取到这个id值
+    var id = obj.id;
+    //   打印一下这个id值
+    //   console.log(id);
+
+    //   时间插件的逻辑代码start
+    //蓝色主题色
+    jeDate("#theme01", {
+      theme: {
+        bgcolor: "#00A1CB",
+        color: "#ffffff",
+        pnColor: "#00CCFF"
+      },
+      format: "YYYY-MM-DD",
+      // 注意：引入时间插件后需要更改一下时间插件的层级，要不人会被其他的样式层级覆盖掉
+      zIndex: 99999,
+    });
+    //   时间插件的逻辑代码end
+
+
+    //   富文本编辑器插件儿的逻辑代码start
+    var E = window.wangEditor
+    var editor = new E('#editor')
+      // 或者 var editor = new E( document.getElementById('editor') )
+    editor.create()
+      //   富文本编辑器插件儿的逻辑代码end
+
+    //   需求：当加载页面的时候需获取到文章类别的的分类
+    //   分析：当刷新页面的时候，需要向服务器发送ajax请求，获取到文章分类数据，并使用模板引擎渲染到页面上
+    $.ajax({
+      //   设置url的请求接口地址
+      url: BigNew.category_list,
+      //   设置请求方式
+      type: 'get',
+      // 响应服务器返回的参数
+      success: function(result) {
+        console.log(result);
+        //   使用模板引擎将获取到的响应的信息渲染到select标签中的option中
+        var str = template('text', result);
+        $('.category').html(str);
+      }
+    });
+
+    //   需求：选中图片之后需要图片预览功能
+    // 分析：我们要给文件上传控件添加给变内容事件，当内容改变的时候，需要获取到当前上传的图片，并给这个图片一个临时地址，我们要将这个临时地址再附加到img的src固定属性上，这样就达到了头像预览功能
+    $('#inputCover').change(function() {
+      var file = this.files[0];
+      // console.log(file);
+      // 我们给这个文件一个临时的url地址
+      var url = URL.createObjectURL(file);
+      // console.log(url);
+      // 我们再将这个临时的url地址给到img的固定属性src中
+      $('.article_cover').attr('src', url);
+    });
+
+
+    //   需求：加载页面的时候需要将当前点击的文章类表的内容添加到编辑文章的页面中的input标签中
+    $.ajax({
+      //   设置url接口的请求地址
+      url: BigNew.article_search,
+      //   设置请求方式
+      type: 'get',
+      // 设置请求参数
+      data: {
+        id,
+      },
+      // 响应服务器返回的数据
+      success: function(result) {
+        console.log(result);
+        //   我们需要将获取到的数据赋值到对应的input框中 title
+        //   给文章标题设置内容
+        $('#inputTitle').val(result.data.title);
+        //   给img标签设置src属性
+        $('.article_cover').attr('src', result.data.cover);
+        //   给分账分类设置对应的内容 这里需要注意，给下拉列表设置值的时候，只需使用val()方法即可，因为下拉列表中默认就是给value设置值的，所以，不用使用attr()这个方法，这种方法反而不好用
+        $('.category').val(result.data.categoryId);
+        //   给时间插件儿设置时间
+        $('#theme01').val(result.data.date);
+        // 给富文本编辑器设置内容start
+        editor.txt.html(result.data.content);
+        // 给富文本编辑器设置内容end
+      }
+    });
+
+
+    //   因为有两个按钮，一个是修改按钮，一个是存为草稿，所以我们要将这方法进行封装一下，方便调用
+    function get_article(button, static) {
+      //   需求：点击修改按钮的时候需要获取到所有的用户填写的文章信息
+      $(button).click(function(e) {
+        // 因为修改按钮是使用submit类型做的所以我们要先禁止掉按钮的默认行为
+        e.preventDefault();
+        // 为了用户体验，询问一下用户
+        var firm = confirm('确定要修改吗？');
+        // 如果是取消，则直接停止代码执行
+        if (!firm) {
+          return;
+        } else {
+          // 因为用户填写的信息都在form表单中，所以我们要先创建一个formdata的实例对象，这里需要注意：formdata()这个方法中需要填入的是一个DOM对象并不是一个jQuery对象，所以我们要将$('#form')转成DOM对象，jQuery对象转成DOM对象的方法就是$('jq对象')[0]
+          var formdata = new FormData($('#form')[0]);
+          // 因为form表单中没有一下几项，所以我们要给form表单添加上
+          /* 
+              form表单中没有
+                      id  文章id
+                      content  文章内容
+                      state  已发布/草稿
+          */
+          //    注意：给form表单添加键名的时候需要使用append()方法
+          // 获取到文章的id
+          formdata.append('id', id);
+          // 获取到富文本框中的内容
+          formdata.append('content', editor.txt.text());
+          // 获取到文章的提交状态
+          formdata.append('state', static);
+          // 现在使用ajax技术将获取到的内容发送到服务器中
+          $.ajax({
+            // 设置url的接口请求地址
+            url: BigNew.article_edit,
+            // 设置请求方式
+            type: 'post',
+            // 设置请求参数
+            data: formdata,
+            //   这里需要注意，当formdata和ajax结合使用的时候需要添加两个参数
+            contentType: false,
+            processData: false,
+            // 响应服务器返回的数据
+            success: function(result) {
+              // console.log(result);
+              if (result.code == 200) {
+                alert('文章' + result.msg);
+                // 文章修改成功之后，需要跳转页面，跳转到文章列表页面
+                window.location.href = './article_list.html';
+              } else {
+                alert('文章修改失败~~');
+              }
+            }
+          });
+        }
+      });
+    }
+    //   点击修改调用这个方法
+    get_article('.btn-edit', '已发布');
+    //   点击存为草稿也调用这个方法
+    get_article('.btn-draft', '草稿');
+
+
+
+  });
+  //
+</script>
 
 </html>
